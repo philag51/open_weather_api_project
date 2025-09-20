@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='weather_app_style.css') }}">
+</head>
+<body style="background: url('{{ url_for('static', filename='images/' ~ (weather.background if weather else "clear_skies.jpg")) }}') no-repeat center center fixed; background-size: cover;">
+    <div class="overlay">
+        <h1 class="title">Weather Dashboard</h1>
+        <form method="POST">
+            <input type="text" name="city" placeholder="Enter city name">
+            <button type="submit">Get Weather</button>
+        </form>
+
+        {% if weather %}
+            {% if weather.error %}
+                <p class="error">{{ weather.error }}</p>
+            {% else %}
+                <div class="weather-card">
+                    <h2>{{ weather.city }}</h2>
+                    <p>{{ weather.temp }}°C | {{ weather.desc }}</p>
+                    <img src="http://openweathermap.org/img/wn/{{ weather.icon }}@2x.png" alt="icon">
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>
